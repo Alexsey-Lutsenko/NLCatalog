@@ -132,4 +132,10 @@ export default {
 .modal__button-submit {
   margin-left: 18px;
 }
+
+@media (max-width: 563px) {
+  .modal__button-submit {
+    margin-left: 5px;
+  }
+}
 </style>

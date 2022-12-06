@@ -29,4 +29,11 @@ export default {
   background: #ffffff;
   box-shadow: 0px 2px 10px rgba(151, 151, 151, 0.2);
 }
+
+@media (max-width: 563px) {
+  .app__button {
+    font-size: 10px;
+    padding: 14px 5px;
+  }
+}
 </style>

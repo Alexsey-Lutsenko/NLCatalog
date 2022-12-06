@@ -125,4 +125,10 @@ export default {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+
+@media (max-width: 563px) {
+  .modal__header {
+    font-size: 16px;
+  }
+}
 </style>

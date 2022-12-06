@@ -196,4 +196,13 @@ export default {
   width: 20px;
   height: 20px;
 }
+
+@media (max-width: 563px) {
+  .search__input input {
+    font-size: 14px;
+  }
+  .search__result ul {
+    font-size: 14px;
+  }
+}
 </style>

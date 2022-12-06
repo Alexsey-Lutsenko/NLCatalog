@@ -8,6 +8,7 @@
         <img src="../assets/leftarrow.png" alt="leftarrow" @click.prevent="back" />
       </div>
       <div class="category__title">{{ category.name }}</div>
+      <div class="category__menutogger" @click.prevent="menuToggle">sub-меню</div>
     </div>
     <div class="catalog__body" v-if="!loading">
       <div class="catalor__saitbar saitbar" v-if="category.children.length > 2">
@@ -88,11 +89,16 @@ export default {
           await this.getGoods(subCategory || 0);
         })
         .catch((err) => console.log(err));
+
       this.loading = false;
     },
 
     back() {
       this.$router.push("/");
+    },
+
+    menuToggle() {
+      document.querySelector(".saitbar").classList.toggle("_lock");
     },
 
     async getGoods(subCategory) {
@@ -103,6 +109,7 @@ export default {
           .get(`https://nlstar.com/ru/api/catalog3/v1/menutags/${this.slug}/?city_id=${this.cityId}`)
           .then((res) => {
             this.goods = res.data.products;
+            this.$router.push({ path: `/category/${this.slug}/` });
           })
           .catch((err) => console.log(err));
       } else {
@@ -115,13 +122,15 @@ export default {
           })
           .catch((err) => console.log(err));
       }
+      if (document.querySelector(".saitbar")) {
+        document.querySelector(".saitbar").classList.toggle("_lock");
+      }
       this.subCategoryLoad = false;
     },
   },
 
   watch: {
     cityId(newValue) {
-      console.log(newValue);
       this.initialData(newValue);
     },
   },
@@ -135,11 +144,15 @@ export default {
 </script>
 
 <style scoped>
+._lock {
+  display: none;
+}
 .category__container {
 }
 .category__header {
   margin: 42px 0 24px 0;
   display: flex;
+  align-items: center;
   align-items: center;
 }
 .category__loader {
@@ -156,6 +169,16 @@ export default {
   margin: 0px 0px 0px 10px;
   font-size: 44px;
   line-height: 100%;
+}
+.category__menutogger {
+  margin: 0px 0px 0px 10px;
+  display: none;
+  border: 1px solid #979797;
+  border-radius: 20px;
+  padding: 2px 5px;
+}
+.category__menutogger:hover {
+  background: #979797;
 }
 .catalog__body {
   display: flex;
@@ -225,7 +248,7 @@ export default {
 .card-goods__body {
   width: 271px;
   background: #ffffff;
-  padding: 50px 20px;
+  padding: 15px 20px 30px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -288,5 +311,114 @@ export default {
 .card-goods__button_alloved a {
   color: rgba(39, 39, 39, 0.5);
   cursor: default;
+}
+
+@media (min-width: 891px) {
+  ._lock {
+    display: block;
+  }
+}
+
+@media (max-width: 890px) {
+  .saitbar {
+    position: absolute;
+    z-index: 2;
+    background: #e5e5e5;
+    border-right: 1px solid #979797;
+    border-bottom: 1px solid #979797;
+    padding: 0px 0px 20px 0px;
+  }
+  .category__menutogger {
+    display: block;
+  }
+  .goods {
+    margin: 0px 0px 0px 20px;
+  }
+  .goods__cards {
+    justify-content: center;
+  }
+  .card-goods__image {
+    width: 240px;
+    display: block;
+    padding: 90% 0 0 0;
+  }
+  .card-goods__body {
+    width: 240px;
+    height: 270px;
+  }
+  .card-goods__smalltext {
+  }
+  .card-goods__title {
+    font-size: 16px;
+  }
+  .card-goods__description {
+    font-size: 14px;
+  }
+  .card-goods__price {
+  }
+  .card-goods__button {
+    padding: 6px 40px;
+  }
+  .card-goods__button_alloved {
+    padding: 6px 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .category__loader {
+    margin: 42px 0px 0px 0px;
+    width: 30px;
+    height: 30px;
+  }
+  .category__icon img {
+    width: 20px;
+    height: 20px;
+  }
+  .category__title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 563px) {
+  .goods {
+    margin: 0px 0px 0px 20px;
+  }
+  .card-goods__image {
+    width: 180px;
+    display: block;
+    padding: 90% 0 0 0;
+  }
+  .card-goods__body {
+    width: 180px;
+  }
+  .card-goods__smalltext {
+  }
+  .card-goods__title {
+    font-size: 16px;
+  }
+  .card-goods__description {
+    font-size: 14px;
+  }
+  .card-goods__price {
+  }
+  .card-goods__button {
+    font-size: 15px;
+    padding: 6px 30px;
+  }
+  .card-goods__button_alloved {
+    padding: 6px 10px;
+  }
+  .category__loader {
+    margin: 42px 0px 0px 0px;
+    width: 30px;
+    height: 30px;
+  }
+  .category__icon img {
+    width: 20px;
+    height: 20px;
+  }
+  .category__title {
+    font-size: 18px;
+  }
 }
 </style>
