@@ -115,6 +115,9 @@ export default {
   align-items: center;
   margin-right: 8px;
 }
+.location__icon:hover ~ .location__sity {
+  text-decoration: underline;
+}
 .location__sity {
   font-size: 15px;
   line-height: calc(24 / 15 * 100%);

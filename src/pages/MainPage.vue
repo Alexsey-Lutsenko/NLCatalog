@@ -8,7 +8,7 @@
         <app-loader></app-loader>
       </div>
       <div class="catalog__cards" v-else>
-        <div class="catalog__card card-catalog" v-for="category in categories">
+        <div class="catalog__card card-catalog" v-for="category in categories" @click.prevent="openCategory(category)">
           <div :style="{ color: category.text_color }" class="card-catalog__title">{{ category.name }}</div>
           <div class="card-catalog__image _ibg">
             <img :src="category.image" :alt="category.name" />
@@ -20,9 +20,12 @@
 </template>
 
 <script>
+import { useRoute } from "vue-router";
+
 export default {
   data() {
     return {
+      route: useRoute(),
       categories: null,
       loading: false,
     };
@@ -40,6 +43,10 @@ export default {
         .then((res) => (this.categories = res.data.tags))
         .catch((err) => console.log(err));
       this.loading = false;
+    },
+
+    openCategory(category) {
+      this.$router.push({ path: `/category/${category.slug}/` });
     },
   },
 
